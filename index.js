@@ -71,7 +71,7 @@ function jsPack(sets) {
           plugins: ['transform-runtime']
         }
       }
-    },{
+    }, {
       test: /\.vue$/,
       loader: "vue-loader"
     }]
@@ -114,19 +114,26 @@ function cssPack(sets, extractLessSet) {
   ];
 }
 
-function tsPack(sets) {
+class tsPack {
+  constructor(sets) {
     this.entry = cleanEntry(sets),
-    this.output = sets.output;
+      this.output = sets.output;
     this.resolve = {
-        // Add '.ts' and '.tsx' as a resolvable extension.
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+      // Add '.ts' and '.tsx' as a resolvable extension.
+      extensions: ['.ts', '.tsx', '.js']
     };
     this.module = {
-        loaders: [
-            // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
-            { test: /\.tsx?$/, loader: "ts-loader" }
-        ]
+      loaders: [
+        // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
+        {
+          test: /\.tsx?$/,
+          loader: "ts-loader?" + JSON.stringify({
+            configFile: process.cwd() + '/tsconfig.webpack.json'
+          })
+        }
+      ]
     };
+  }
 }
 
 var check = {
@@ -163,7 +170,7 @@ var check = {
     });
   },
   ts: function (gtSet) {
-    return new jsPack({
+    return new tsPack({
       entry: gtSet.ts,
       output: {
         filename: 'js/[name].js',
@@ -189,13 +196,13 @@ function GuanTing(gtSet) {
   return out;
 }
 
-function cleanEntry (sets) {
-    let set = {};
-    for (let s in sets.entry) {
-      if (s === 'dirName' || s === 'resolve' || s === 'ext') continue;
-      set[s] = sets.entry[s];
-    }
-    return set;
+function cleanEntry(sets) {
+  let set = {};
+  for (let s in sets.entry) {
+    if (s === 'dirName' || s === 'resolve' || s === 'ext') continue;
+    set[s] = sets.entry[s];
+  }
+  return set;
 }
 
 function noder(packs) {

@@ -37,6 +37,31 @@ GT Pack
         }
     });
 
+#### TS ####
+
+    module.exports = new gtPack.ts(
+    {
+        entry:
+        {
+            index: '__dirname + '/js/index.ts',
+        },
+        output:
+        {
+            filename: 'public/js/[name].js',
+            path: __dirname + '/', 
+        }
+    });
+
+在專案根目錄新增：`tsconfig.webpack.json`
+
+    {
+        "compilerOptions": {
+            "removeComments": true,
+            "sourceMap": true
+        }
+    }
+
+    // 可以自由增加自己的設定
 
 #### CSS #### 
 

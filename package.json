@@ -24,17 +24,21 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "style-loader": "^0.16.1",
+    "ts-loader": "^2.3.4",
     "url-loader": "^0.5.8",
     "webpack": "^2.7.0"
   },
-  "contributors": [{
-    "name": "Single Zero",
-    "email": "zero@single9.net",
-    "url": "http://single9.net" 
-  },{
-    "name": "Duye Chen",
-    "email": "duye@single9.net",
-    "url": "http://single9.net" 
-  }],
+  "contributors": [
+    {
+      "name": "Single Zero",
+      "email": "zero@single9.net",
+      "url": "http://single9.net"
+    },
+    {
+      "name": "Duye Chen",
+      "email": "duye@single9.net",
+      "url": "http://single9.net"
+    }
+  ],
   "license": "MIT"
 }
