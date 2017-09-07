@@ -177,11 +177,11 @@ var check = {
     {
         return new htmlPack(
         {
-            entry: gtSet.html,
+            entry: gtSet.ejs,
             output:
             {
                 filename: '[name].ejs',
-                path: gtSet.html.dirName || gtSet.dirName,
+                path: gtSet.ejs.dirName || gtSet.dirName,
             }
         },
         {
