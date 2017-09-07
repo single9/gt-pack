@@ -1,6 +1,6 @@
 {
   "name": "gt-pack",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "啊就一個 webpack 的通用使用整合包",
   "repository": {
     "type": "git",
