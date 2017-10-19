@@ -240,7 +240,7 @@ function GuanTing(gtSet)
     {
         try
         {
-            if (x != 'dirName')
+            if (x != 'dirName' && x != 'limitValue')
             {
                 console.log(x);
                 out.push(check[x](gtSet));
