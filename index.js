@@ -9,8 +9,8 @@ function htmlPack(sets, extractSet)
     var extractLess = new ExtractTextPlugin("css/[name].css");
     this.entry = cleanEntry(sets);
     this.output = sets.output;
-    this.resolve = sets.resolve ||
-    {};
+    this.resolve = sets.resolve || {};
+    let limitValue = sets.limitValue || 10000;
     this.module = {
         rules: [
         {
@@ -33,7 +33,7 @@ function htmlPack(sets, extractSet)
             loader: 'url-loader',
             options:
             {
-                limit: 10000,
+                limit: limitValue,
                 name: '/public/imgs/[name].[ext]',
             }
         },
@@ -42,9 +42,13 @@ function htmlPack(sets, extractSet)
             loader: 'file-loader',
             options:
             {
-                limit: 10000,
+                limit: limitValue,
                 name: '/public/audio/[name].[ext]',
             }
+        },
+        {
+            test: /\.gthtml$/,
+            use: ["html-loader"]
         },
         {
             test: /\.less$/,
@@ -97,6 +101,7 @@ function cssPack(sets, extractLessSet)
     var extractLess = new ExtractTextPlugin(extractLessSet);
     this.entry = cleanEntry(sets);
     this.output = sets.output;
+    let limitValue = sets.limitValue || 10000;
     this.module = {
         rules: [
         {
@@ -104,7 +109,7 @@ function cssPack(sets, extractLessSet)
             loader: 'url-loader',
             options:
             {
-                limit: 1000000000,
+                limit: limitValue,
                 name: '/public/imgs/[name].[ext]',
             }
         },
@@ -124,11 +129,10 @@ function cssPack(sets, extractLessSet)
             }),
         }]
     };
-    this.resolve = sets.resolve ||
-    {};
+    this.resolve = sets.resolve || {};
     this.plugins = [
         extractLess,
-        new webpack.BannerPlugin('沒看過冠霆CSSPACK!?'),
+        new webpack.BannerPlugin(''),
     ];
 }
 
