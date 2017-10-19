@@ -10,7 +10,6 @@ function htmlPack(sets, extractSet)
     this.entry = cleanEntry(sets);
     this.output = sets.output;
     this.resolve = sets.resolve || {};
-    let limitValue = sets.limitValue || 10000;
     this.module = {
         rules: [
         {
@@ -33,7 +32,7 @@ function htmlPack(sets, extractSet)
             loader: 'url-loader',
             options:
             {
-                limit: limitValue,
+                limit: sets.limitValue,
                 name: '/public/imgs/[name].[ext]',
             }
         },
@@ -42,7 +41,7 @@ function htmlPack(sets, extractSet)
             loader: 'file-loader',
             options:
             {
-                limit: limitValue,
+                limit: sets.limitValue,
                 name: '/public/audio/[name].[ext]',
             }
         },
@@ -64,10 +63,9 @@ function jsPack(sets)
 {
     this.entry = cleanEntry(sets);
     this.output = sets.output;
-    this.resolve = sets.resolve ||
-    {};
+    this.resolve = sets.resolve || {};
     this.plugins = [
-        new webpack.BannerPlugin('沒看過冠霆JSPACK!?'),
+        new webpack.BannerPlugin(''),
     ];
     //可能之後會用到圖片的LOADER 還有ES6 紀錄 TODO
     this.module = {
@@ -101,7 +99,6 @@ function cssPack(sets, extractLessSet)
     var extractLess = new ExtractTextPlugin(extractLessSet);
     this.entry = cleanEntry(sets);
     this.output = sets.output;
-    let limitValue = sets.limitValue || 10000;
     this.module = {
         rules: [
         {
@@ -109,7 +106,7 @@ function cssPack(sets, extractLessSet)
             loader: 'url-loader',
             options:
             {
-                limit: limitValue,
+                limit: sets.limitValue,
                 name: '/public/imgs/[name].[ext]',
             }
         },
@@ -171,7 +168,8 @@ var check = {
             {
                 filename: '[name].html',
                 path: gtSet.html.dirName || gtSet.dirName,
-            }
+            },
+            limitValue: gtSet.limitValue || 10000
         },
         {
             filename: '[name].html',
@@ -201,7 +199,8 @@ var check = {
             {
                 filename: 'css/[name].css',
                 path: gtSet.css.dirName || gtSet.dirName,
-            }
+            },
+            limitValue: gtSet.limitValue || 10000
         },
         {
             filename: 'css/[name].css',
