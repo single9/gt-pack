@@ -259,19 +259,23 @@ function GuanTing(gtSet)
 function readEntries (viewsPath, dirName, ext='.html')
 {
     const read = (dir) =>
-        fs.readdirSync(dir)
-            .reduce((files, file) =>
-                fs.statSync(path.join(dir, file)).isDirectory() ?
-                    files.concat(read(path.join(dir, file))) :
-                    files.concat(path.join(dir.split(viewsPath)[1], file)),
-            []);
+    fs.readdirSync(dir)
+        .reduce((files, file) => {
+            let isDirectory = fs.statSync(path.join(dir, file)).isDirectory();
+            if (isDirectory) {
+                return files.concat(read(path.join(dir, file)));
+            } else if (file.search(ext) >= 0) {
+                return files.concat(path.join(dir.split(viewsPath)[1], file));
+            } else {
+                return files;
+            }
+        }, []);
 
     const list = read(viewsPath);
 
     let views = {};
 
-    for (let i=0; i<list.length; i++)
-    {
+    for (let i=0; i<list.length; i++) {
         let name = (list[i].split(ext)[0]).toString();
         views[name] = viewsPath + list[i];
     }
