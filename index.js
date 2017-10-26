@@ -1,5 +1,6 @@
 const NODE_ENV = process.env.NODE_ENV;
-/*冠霆佩克喔!!*/
+const fs = require('fs');
+const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -255,6 +256,31 @@ function GuanTing(gtSet)
     return out;
 }
 
+function readEntries (viewsPath, dirName, ext='.html')
+{
+    const read = (dir) =>
+        fs.readdirSync(dir)
+            .reduce((files, file) =>
+                fs.statSync(path.join(dir, file)).isDirectory() ?
+                    files.concat(read(path.join(dir, file))) :
+                    files.concat(path.join(dir.split(viewsPath)[1], file)),
+            []);
+
+    const list = read(viewsPath);
+
+    let views = {};
+
+    for (let i=0; i<list.length; i++)
+    {
+        let name = (list[i].split(ext)[0]).toString();
+        views[name] = viewsPath + list[i];
+    }
+
+    views.dirName = dirName;
+
+    return views;
+}
+
 function cleanEntry(sets)
 {
     let set = {};
@@ -280,5 +306,6 @@ module.exports = GuanTing;
 module.exports.css = cssPack;
 module.exports.js = jsPack;
 module.exports.html = htmlPack;
+module.exports.readEntries = readEntries;
 module.exports.GuanTing = GuanTing;
 module.exports.noder = noder;
