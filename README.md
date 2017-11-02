@@ -24,31 +24,25 @@ GT Pack
 
 #### JS #### 
 
-    module.exports = new gtPack.js(
-    {
-        entry:
-        {
-            index: '__dirname + '/js/index.js',
+    module.exports = new gtPack.js({
+        entry: {
+            index: '__dirname + ' / js / index.js ',
         },
-        output:
-        {
+        output: {
             filename: 'public/js/[name].js',
-            path: __dirname + '/', 
+            path: __dirname + '/',
         }
     });
 
 #### TS ####
 
-    module.exports = new gtPack.ts(
-    {
-        entry:
-        {
-            index: '__dirname + '/js/index.ts',
+    module.exports = new gtPack.ts({
+        entry: {
+            index: '__dirname + ' / js / index.ts ',
         },
-        output:
-        {
+        output: {
             filename: 'public/js/[name].js',
-            path: __dirname + '/', 
+            path: __dirname + '/',
         }
     });
 
@@ -65,52 +59,41 @@ GT Pack
 
 #### CSS #### 
 
-    module.exports = new gtPack.css(
-    {
-        entry:
-        {
-            index: '__dirname + '/less/index.less'
+    module.exports = new gtPack.css({
+        entry: {
+            index: '__dirname + ' / less / index.less '
         },
-        output:
-        {
+        output: {
             filename: 'public/style/[name].css',
-            path: __dirname + '/', 
+            path: __dirname + '/',
         }
-    },
-    {
+    }, {
         filename: 'public/style/[name].css',
     });
 
 #### JS + CSS #### 
 
     // JS
-    let js = new gtPack.js(
-    {
-        entry:
-        {
+    let js = new gtPack.js({
+        entry: {
             index: __dirname + '/js/index.js',
         },
-        output:
-        {
+        output: {
             filename: 'public/js/[name].js',
-            path: __dirname, 
+            path: __dirname,
         }
     });
 
     // CSS
-    let css = new gtPack.css(
-    {
-        entry:
-        {
+    let css = new gtPack.css({
+        entry: {
             index: __dirname + '/less/index.less'
         },
-        output:
-        {
+        output: {
             filename: 'public/style/[name].css',
-            path: __dirname, 
+            path: __dirname,
         }
-    },
-    {
+    }, {
         filename: 'public/style/[name].css',
     });
 
@@ -119,37 +102,45 @@ GT Pack
     
 ### 整合設定 ### 
 
-    let x = gtPack.GuanTing(
-    {
-        dirName: __dirname + '/views/output',   // 輸出位置
-        html:
-        {
+#### 第一種設定方式 ####
+
+    let x = gtPack.GuanTing({
+        dirName: __dirname + '/views/output', // 輸出位置
+        html: {
             index: __dirname + '/dev/index.ejs',
             register: __dirname + '/dev/register.ejs'
         },
-        css:
-        {
+        css: {
             index: __dirname + '/dev/css/index.less',
             register: __dirname + '/dev/css/register.less',
         },
-        js:
-        {
+        js: {
             index: __dirname + '/dev/js/index.js',
             register: __dirname + '/dev/js/register.js',
         }
     });
 
     module.exports = x;
+
+#### 第二種設定方式 ####
+
+    let x = gtPack.GuanTing({
+        dirName: __dirname + '/views/output', // 輸出位置
+        html: gtPack.readEntries(__dirname + '/views/', process.cwd() + '/build/views/'),
+        css: gtPack.readEntries(__dirname + '/views/less/', process.cwd() + '/build/views/', 'less')
+        js: gtPack.readEntries(__dirname + '/views/js/', process.cwd() + '/build/views/', 'js')
+    });
+
+    module.exports = x;
     
-### ㄋㄡˋㄉㄜˊ 冠霆樹狀PACK ### 
+### 樹狀結構 ### 
 
 這是一個樹狀節點版本的結構，讓`webpack`可以在不同的資料夾中有不同的設定。
 
     let noder = require('gt-pack').noder;
-    let List = 
-    [
-        require('./dirA/webpack.config.js'),    //其他PACK
-        require('./dirB/webpack.config.js'),     //其他PACK
+    let List = [
+        require('./dirA/webpack.config.js'),    // 其他設定
+        require('./dirB/webpack.config.js'),    // 其他設定
     ];
     
     module.exports = noder(List);
