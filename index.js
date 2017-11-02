@@ -256,8 +256,9 @@ function GuanTing(gtSet)
     return out;
 }
 
-function readEntries (viewsPath, dirName, ext='.html')
+function readEntries (viewsPath, dirName, ext='html')
 {
+    ext = '.' + ext;
     const read = (dir) =>
     fs.readdirSync(dir)
         .reduce((files, file) => {
