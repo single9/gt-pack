@@ -48,7 +48,12 @@ function htmlPack(sets, extractSet)
         },
         {
             test: /\.gthtml$/,
-            use: ["html-loader"]
+            loader: "html-loader",
+            options:
+            {
+                interpolate: 'require',
+                attrs: ['img:src', 'audio:src', 'source:src', 'video:src']
+            }
         },
         {
             test: /\.less$/,
